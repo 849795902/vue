@@ -1,101 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <script src="vue1026.js"></script>
-<style>
-    #tb {
-        width: 800px;
-        border-collapse: collapse;
-        margin: 0 auto;
-    }
-
-    #tb th, td {
-        border: 1px solid black;
-        text-align: center;
-    }
-
-    #tb th {
-        background: cornflowerblue;
-    }
-
-    .input {
-        margin-left: 20%;
-        margin-bottom: 40px;
-    }
-
-
-</style>
 <body>
-
 <div id="app">
-    <div class="input">
-        <input type="text" v-model="id">
-        <input type="text" v-model="name">
-        <input type="button" value="add" v-on:click="add_item" style="width: 40px">
-        <input type="text" placeholder="请输入筛选条件" v-model="sname">
-    </div>
-
-    <table id="tb">
-        <tr id="header">
-            <th>id</th>
-            <th>name</th>
-            <th>time</th>
-            <th>delete</th>
-        </tr>
-        <template v-for="item in items | filterBy sname in 'name'">
-            <tr id="body">
-                <td>{{item.id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.time}}</td>
-                <td><a href="#" @click="delete_item(item.id)">delete</a></td>
-            </tr>
-        </template>
-    </table>
+    {{time | timeftm}}
 </div>
 
-
+<div id="app2">
+    <!--过滤器前面为第一个参数，后面为第二个传入到过滤器中的参数-->
+    {{ time | datefmt_glb name }}
+</div>
 </body>
 <script>
     Vue.config.devtools = true;
+
+    //定义一个全局过滤器进行过滤
+    Vue.filter('datefmt_glb',function (input,name) {
+        return input.getFullYear()+'-'+(input.getMonth()+1)+'-'+input.getDay()+'-'+name
+    })
+
     var vm = new Vue({
         el: "#app",
         data: {
-
-            name: "",
-            id: 0,
-            sname: "",
-            items: [
-                {
-                    name: "香茗",
-                    id: "1",
-                    time: new Date(),
-                },
-                {
-                    name: "想好",
-                    id: "2",
-                    time: new Date()
-                }
-            ]
+            time: new Date()
         },
-        methods: {
-            add_item: function () {
-                this.items.push({name: this.name, id: this.id, time: new Date()});
-                this.name = "";
-                this.id = 0;
-            },
-            delete_item: function (id) {
-                var index = this.items.findIndex(function (item) {
-                    if (item.id == id) {
-                        return id;
-                    }
-                });
-                this.items.splice(index);// splice 方法根据索引删除id
+        // 定义一个私有的过滤器只在app域内有效
+        filters: {
+            timeftm: function (input) {
+                return input.getFullYear()+'-'+(input.getMonth()+1)+'-'+input.getDay()
             }
         }
-    })
+    });
+    var vm2=new Vue({
+        el:"#app2",
+        data:{
+            time:new Date(),
+            name:"参数"
+        }
+    });
+
+
 
 </script>
 </html>
