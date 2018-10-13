@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<script src="vue1026.js"></script>
+<script src="../vue1026.js"></script>
 <style>
     #tb {
         width: 800px;
@@ -33,9 +33,10 @@
 <div id="app">
     <div class="input">
         <input type="text" v-model="id">
+        <!--修改为当按回车键时进行数据添加-->
         <input type="text" v-model="name">
         <input type="button" value="add" v-on:click="add_item" style="width: 40px">
-        <input type="text" placeholder="请输入筛选条件" v-model="sname">
+        <input type="text" v-focus placeholder="请输入筛选条件" v-model="sname">
     </div>
 
     <table id="tb">
@@ -60,6 +61,14 @@
 </body>
 <script>
     Vue.config.devtools = true;
+
+    // 实现自定义指令当加载页面时光标自动移动到文本框的位置
+    // 定义指令不需要添加v-,调用时使用v-
+    Vue.directive('focus', function () {
+        var targetObj = this.el;
+        targetObj.focus();
+    });
+
     var vm = new Vue({
         el: "#app",
         data: {

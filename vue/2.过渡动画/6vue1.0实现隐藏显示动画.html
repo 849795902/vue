@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现显示隐藏动画</title>
+</head>
+<!--使用动画的步骤
+1.在需要动画的元素上增加transtion="xxxx"的特性，
+2.利用三个css来控制-->
+<script src="../vue1026.js"></script>
+<script src="../vue-resource151.js"></script>
+<style>
+    .show-transition{
+        transition: all 0.4s ease;
+        /*此处定义动画元素的最终状态和初始状态*/
+        margin-left: 20px;
+    }
+    .show-enter,.show-leave{
+        /*定义动画的结束位置*/
+        margin-left: 50px;
+    }
+</style>
+<body>
+<div id="ap_1">
+    <button @click="toggle">显示/隐藏</button>
+    <p v-show="isshow" transition="show"> 显示 </p>
+</div>
+
+</body>
+<script>
+    var vm1 = new Vue({
+        el: "#ap_1",
+        data: {
+            isshow: false
+        },
+        methods: {
+            toggle: function () {
+                this.isshow = !this.isshow;
+            }
+        }
+    })
+
+</script>
+</html>

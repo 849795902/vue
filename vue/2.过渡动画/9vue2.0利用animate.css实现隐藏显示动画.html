@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现显示隐藏动画</title>
+</head>
+
+<script src="../vue257.js"></script>
+<script src="../vue-resource151.js"></script>
+<link rel="stylesheet" href="../animate.css">
+
+<body>
+<div id="ap_1">
+    <button @click="toggle">显示/隐藏</button>
+    <!--2.0把动画控制的操作嵌入到了标签中-->
+    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
+        <div v-show="isshow" class="animated"> 显示 </div>
+    </transition>
+
+</div>
+
+</body>
+<script>
+    var vm1 = new Vue({
+        el: "#ap_1",
+        data: {
+            isshow: false
+        },
+        methods: {
+            toggle: function () {
+                this.isshow = !this.isshow;
+            }
+        }
+    })
+
+</script>
+</html>

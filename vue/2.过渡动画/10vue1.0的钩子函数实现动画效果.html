@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue1.0的钩子函数实现动画效果</title>
+</head>
+<script src="../vue1026.js"></script>
+<script src="../vue-resource151.js"></script>
+<style>
+    .show {
+        transition: all 50s ease;
+    }
+</style>
+<body>
+<div id="ap_1">
+    <button @click="toggle">显示/隐藏</button>
+    <div v-if="isshow" class="show" transition="show"> 显示</div>
+</div>
+</body>
+<script>
+    Vue.transition('show', {
+        //定义动画开始动画的初始位置.参数el表示当前动画的元素
+        beforeEnter: function (el) {
+            el.style.transform = "translate(100px,0)"
+        },
+        //定义动画的结束时的位置
+        enter: function (el, done) {
+            // 设置刷新状态
+            el.offsetWidth;
+            // 设置动画结束位置
+            el.style.transform = "translate(2000px,200px)";
+            // 手动调用done方法,由这个方法决定动画结束了，否则动画的消失会有延时
+            done();
+        },
+        //动画的状态复原设置
+        afterEnter: function (el) {
+            //跨作用域操作
+            vm1.isshow = !vm1.isshow;
+        }
+    });
+    Vue.config.devtools = true;
+    var vm1 = new Vue({
+        el: "#ap_1",
+        data: {
+            isshow: false
+        },
+        methods: {
+            toggle: function () {
+                this.isshow = !this.isshow;
+            }
+        }
+    })
+
+</script>
+</html>

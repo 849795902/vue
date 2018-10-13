@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现显示隐藏动画</title>
+</head>
+
+<script src="../vue1026.js"></script>
+<script src="../vue-resource151.js"></script>
+<link rel="stylesheet" href="../animate.css">
+
+<body>
+<div id="ap_1">
+    <button @click="toggle">显示/隐藏</button>
+
+    <!--在要实现动画的标签上添加transition及class="animated"-->
+    <div v-show="isshow" class="animated" transition="show"> 显示 </div>
+</div>
+
+</body>
+<script>
+    Vue.config.devtools=true;
+    var vm1 = new Vue({
+        el: "#ap_1",
+        data: {
+            isshow: false
+        },
+        methods: {
+            toggle: function () {
+                this.isshow = !this.isshow;
+            }
+        },
+        transitions:{
+            'show':{
+                enterClass:"fadeInRight",
+                leaveClass:"fadeOutRight"
+            }
+        }
+    })
+
+</script>
+</html>
